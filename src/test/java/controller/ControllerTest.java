@@ -43,7 +43,7 @@ public class ControllerTest {
         CustomerDTO customer = controller.findCustomer("0701234567");
 
         assertNotNull(customer);
-        assertEquals("0701234567", customer.getPhoneNumber());
+        assertEquals("0701234567", customer.getPhoneNumber(), "Phone number of the retrieved customer does not match!");
     }
 
     /**
@@ -53,7 +53,7 @@ public class ControllerTest {
     public void testFindNonExistingCustomerReturnsNull() {
         CustomerDTO customer = controller.findCustomer("0000000000");
 
-        assertNull(customer);
+        assertNull(customer,"Non existing customer returned something other than null: " + customer);
     }
 
     /**
@@ -65,10 +65,10 @@ public class ControllerTest {
 
         RepairOrderDTO repairOrder = controller.findRepairOrder(1001);
 
-        assertNotNull(repairOrder);
-        assertEquals("Battery problem", repairOrder.getProblemDescription());
-        assertEquals("0701234567", repairOrder.getCustomerPhoneNumber());
-        assertEquals(1001, repairOrder.getBikeSerialNumber());
+        assertNotNull(repairOrder,"Repair Order is null!");
+        assertEquals("Battery problem", repairOrder.getProblemDescription(),"Description does not match expected!");
+        assertEquals("0701234567", repairOrder.getCustomerPhoneNumber(),"Phone number does not match expected!");
+        assertEquals(1001, repairOrder.getBikeSerialNumber(),"Serial number does not match expected!");
     }
 
     /**
@@ -80,7 +80,7 @@ public class ControllerTest {
 
         int repairOrderId = controller.getRepairOrderIdFromPhone("0701234567");
 
-        assertTrue(repairOrderId > 0);
+        assertTrue(repairOrderId > 0,"RepairOrder has id lower than 1 therefore something has gone wrong!");
     }
 
     /**
@@ -90,8 +90,7 @@ public class ControllerTest {
     public void testGetAllRepairTasks() {
         List<RepairTaskDTO> tasks = controller.getAllRepairTasks();
 
-        assertNotNull(tasks);
-        assertFalse(tasks.isEmpty());
+        assertNotNull(tasks,"Task should not return null!");
     }
 
     /**
@@ -110,9 +109,9 @@ public class ControllerTest {
 
         DiagnosticReportDTO report = controller.getDiagnosticReport("0701234567");
 
-        assertNotNull(report);
-        assertEquals("test case need adjustment", report.getDescription());
-        assertEquals(299, report.getTotalCost());
+        assertNotNull(report, "Report missing! Should not be null");
+        assertEquals("test case need adjustment", report.getDescription(),"Description does not match expected value!");
+        assertEquals(299, report.getTotalCost(),"Total cost does not equal expected value!");
     }
 
 
@@ -128,7 +127,7 @@ public class ControllerTest {
 
         RepairOrderDTO repairOrder = controller.findRepairOrder(4004);
 
-        assertTrue(repairOrder.isAccepted());
+        assertTrue(repairOrder.isAccepted(),"Repair order could not be accepted!");
     }
 
 

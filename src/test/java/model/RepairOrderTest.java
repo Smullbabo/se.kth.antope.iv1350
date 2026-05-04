@@ -23,9 +23,9 @@ public class RepairOrderTest {
 
         RepairOrderDTO dto = order.toDTO();
 
-        assertTrue(dto.isNewlyCreated());
-        assertFalse(dto.isReadyForApproval());
-        assertFalse(dto.isAccepted());
+        assertTrue(dto.isNewlyCreated(),"Did not match expected value ");
+        assertFalse(dto.isReadyForApproval(),"Did not match expected value ");
+        assertFalse(dto.isAccepted(),"Did not match expected value ");
     }
 
     /**
@@ -44,9 +44,9 @@ public class RepairOrderTest {
 
         RepairOrderDTO dto = order.toDTO();
 
-        assertFalse(dto.isNewlyCreated());
-        assertTrue(dto.isReadyForApproval());
-        assertNotNull(dto.getDiagnosticReport());
+        assertFalse(dto.isNewlyCreated(),"Did not match expected value ");
+        assertTrue(dto.isReadyForApproval(),"Did not match expected value ");
+        assertNotNull(dto.getDiagnosticReport(),"Did not match expected value ");
     }
 
     /**
@@ -60,7 +60,7 @@ public class RepairOrderTest {
 
         RepairOrderDTO dto = order.toDTO();
 
-        assertTrue(dto.isAccepted());
+        assertTrue(dto.isAccepted(),"Did not match expected value ");
     }
 
     /**
@@ -72,10 +72,10 @@ public class RepairOrderTest {
 
         RepairOrderDTO dto = order.toDTO();
 
-        assertEquals(42, dto.getId());
-        assertEquals("Flat tire", dto.getProblemDescription());
-        assertEquals("0709999999", dto.getCustomerPhoneNumber());
-        assertEquals(555, dto.getBikeSerialNumber());
+        assertEquals(42, dto.getId(),"Did not match expected value ");
+        assertEquals("Flat tire", dto.getProblemDescription(),"Did not match expected value ");
+        assertEquals("0709999999", dto.getCustomerPhoneNumber(),"Did not match expected value ");
+        assertEquals(555, dto.getBikeSerialNumber(),"Did not match expected value ");
     }
 
     /**
@@ -87,6 +87,6 @@ public class RepairOrderTest {
 
         RepairOrderDTO dto = order.toDTO();
 
-        assertNull(dto.getDiagnosticReport());
+        assertNull(dto.getDiagnosticReport(),"Did not match expected value ");
     }
 }

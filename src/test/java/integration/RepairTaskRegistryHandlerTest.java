@@ -23,8 +23,8 @@ public class RepairTaskRegistryHandlerTest {
     public void testRetrieveTasks() {
         List<RepairTaskDTO> allTasks = repairRegistry.getAllRepairTasks();
 
-        assertNotNull(allTasks);
-        assertEquals("Battery diagnosis", allTasks.get(0).getName());
-        assertEquals("Tire replacement", allTasks.get(3).getName());
+        assertNotNull(allTasks,"No tasks retrieved! Expected empty list");
+        assertEquals("Battery diagnosis", allTasks.get(0).getName(),"Did not match expected value ");
+        assertEquals("Tire replacement", allTasks.get(3).getName(),"Did not match expected value ");
     }
 }

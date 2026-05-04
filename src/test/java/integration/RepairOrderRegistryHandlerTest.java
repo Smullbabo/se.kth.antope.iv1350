@@ -30,7 +30,7 @@ public class RepairOrderRegistryHandlerTest {
 
         registryHandler.createRepairOrder("problem desc", "123", 000);
 
-        assertNotNull(registryHandler.findRepairOrderFromID(1));
+        assertNotNull(registryHandler.findRepairOrderFromID(1),"No repair order was created!");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class RepairOrderRegistryHandlerTest {
 
         //final Map<Integer, RepairOrder> ordersById = new HashMap<>();
 
-        assertNotNull(registryHandler.findRepairOrderFromPhone("123"));
+        assertNotNull(registryHandler.findRepairOrderFromPhone("123"),"Could not retrive customer by phone number!");
     }
 
     @Test
@@ -48,7 +48,7 @@ public class RepairOrderRegistryHandlerTest {
 
         //final Map<Integer, RepairOrder> ordersById = new HashMap<>();
 
-        assertNotNull(registryHandler.findRepairOrderFromID(1));
+        assertNotNull(registryHandler.findRepairOrderFromID(1),"Could not retrieve repairORder by Id!");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class RepairOrderRegistryHandlerTest {
 
         //final Map<Integer, RepairOrder> ordersById = new HashMap<>();
 
-        assertNotNull(registryHandler.findRepairOrderFromSerial(000));
+        assertNotNull(registryHandler.findRepairOrderFromSerial(000),"Could not retrive repair order by serial number");
     }
 
     @Test
@@ -73,6 +73,6 @@ public class RepairOrderRegistryHandlerTest {
         
         RepairOrderDTO orderDTO = order.toDTO();
 
-        assertEquals(true, orderDTO.isReadyForApproval());
+        assertEquals(true, orderDTO.isReadyForApproval(),"No diagnostic report was created adn therefore isReadyForApproval is not true");
     }
 }
