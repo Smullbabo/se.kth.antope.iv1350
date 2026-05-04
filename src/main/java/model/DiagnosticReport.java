@@ -35,7 +35,7 @@ public class DiagnosticReport {
     public String getDescription() { return description; }
 
     /** Gets the repair tasks included in the report. */
-    public List<RepairTaskDTO> getTasks() { return Collections.unmodifiableList(tasks); }
+    public List<RepairTaskDTO> getTasks() { return new ArrayList<>(tasks); }
 
     /** Gets the calculated total cost. */
     public double getTotalCost() { return totalCost; }

@@ -22,6 +22,6 @@ public class RepairTaskRegistryHandler {
      * @return Collection of all repair task in the registry.
      */
     public List<RepairTaskDTO> getAllRepairTasks() {
-        return Collections.unmodifiableList(repairTasks);
+        return new ArrayList<>(repairTasks);
     }
 }
