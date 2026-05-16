@@ -5,6 +5,7 @@ import dto.CustomerDTO;
 import dto.DiagnosticReportDTO;
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
+import exceptions.CustomerNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,13 @@ public class View {
         String phoneNumber = "0701234567";
 
         // First system call, find customer from given phone number.
-        CustomerDTO customer = controller.findCustomer(phoneNumber);
+        CustomerDTO customer;
+        try {
+            customer = controller.findCustomer(phoneNumber);
+        } catch (CustomerNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         System.out.println("Found customer:" + customer);
 
         // Second system call, create a repair order with simulated problem description from customer, their phonenumber and the serialnumber found in the registry.

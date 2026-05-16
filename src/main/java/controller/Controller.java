@@ -4,6 +4,8 @@ import dto.CustomerDTO;
 import dto.DiagnosticReportDTO;
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
+import exceptions.CustomerNotFoundException;
+import exceptions.DatabaseFailException;
 import integration.CustomerRegistryHandler;
 import integration.PrinterHandler;
 import integration.RepairOrderRegistryHandler;
@@ -42,7 +44,7 @@ public class Controller {
      * @param phoneNumber is the customers phoone number.
      * @return CustomerDTO of all the infromation about the customer.
      */
-    public CustomerDTO findCustomer(String phoneNumber) {
+    public CustomerDTO findCustomer(String phoneNumber) throws CustomerNotFoundException{
         return customerRegistry.findCustomer(phoneNumber);
     }
 

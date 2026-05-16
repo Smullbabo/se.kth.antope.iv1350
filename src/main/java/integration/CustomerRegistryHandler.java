@@ -1,12 +1,17 @@
 package integration;
 
 import dto.CustomerDTO;
+import exceptions.CustomerNotFoundException;
+import exceptions.DatabaseFailException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /** Simulates the class contacting a customer registry. */
 public class CustomerRegistryHandler {
     private final Map<String, CustomerDTO> customersByPhone = new HashMap<>();
+
+    private static final String DATABASE_FALIURE_PHONE = "0000000000";
 
     /** Creates the registry handler and fills it with sample customer data. */
     public CustomerRegistryHandler() {
@@ -18,8 +23,21 @@ public class CustomerRegistryHandler {
      * @param phoneNumber CUstomer phone number
      * @return DTO of a customer from simulated database.
      */
-    public CustomerDTO findCustomer(String phoneNumber) {
-        return customersByPhone.get(phoneNumber);
+    public CustomerDTO findCustomer(String phoneNumber) throws CustomerNotFoundException{
+
+        if (DATABASE_FALIURE_PHONE.equals(phoneNumber)) {
+        throw new DatabaseFailException(
+                "Could not contact customer database when searching for phone number: " + phoneNumber
+        );
+    }
+        
+        CustomerDTO customer = customersByPhone.get(phoneNumber);
+
+        if(customer == null) {
+            throw new CustomerNotFoundException(phoneNumber);
+        }
+        
+        return customer;
     }
 
     private void addSampleCustomers() {
