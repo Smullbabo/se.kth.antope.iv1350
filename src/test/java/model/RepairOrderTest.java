@@ -2,6 +2,9 @@ package model;
 
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
+import integration.discount.DiscountStrategy;
+import integration.discount.WinterDiscountStrategy;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,7 +41,9 @@ public class RepairOrderTest {
         List<RepairTaskDTO> tasks = new ArrayList<>();
         tasks.add(new RepairTaskDTO(1, "Task", "Desc", 100));
 
-        DiagnosticReport report = new DiagnosticReport("Fix needed", tasks);
+        DiscountStrategy discount = new WinterDiscountStrategy();
+
+        DiagnosticReport report = new DiagnosticReport("Fix needed", tasks, discount);
 
         order.setDiagnosticReport(report);
 

@@ -2,8 +2,10 @@ package integration;
 
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
-import model.DiagnosticReport;
 import model.RepairOrder;
+import model.RepairOrderObserver;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,9 @@ import java.util.Map;
 public class RepairOrderRegistryHandler {
     private final Map<Integer, RepairOrder> ordersById = new HashMap<>();
     private int Id = 1;
+    private List<RepairOrderObserver> observers = new ArrayList<>();
+
+
 
     /** Creates and stores a new repair order in the map.
      * 
@@ -24,6 +29,7 @@ public class RepairOrderRegistryHandler {
         int id = Id;
         Id = Id + 1;
         RepairOrder order = new RepairOrder(id, problemDescription, customerPhoneNumber, bikeSerialNumber);
+        order.addObservers(observers);
         ordersById.put(id, order);
     }
 
@@ -81,18 +87,22 @@ public class RepairOrderRegistryHandler {
         return order;
     }
 
-    /** Adds a diagnostic report to a repair order if the order exists.
+    /** Adds a diagnostic report to a repair order if the order exists UNUSED.
      * 
      * @param repairOrderId Id of the repair order we want the diagnostic report to be attatched to.
      * @param reportDescription Description from technician.
      * @param selectedTasks Repair Tasks selected by the technican.
      */
     public void addDiagnosticReport(int repairOrderId, String reportDescription, List<RepairTaskDTO> selectedTasks) {
+        
+        /* 
         RepairOrder order = ordersById.get(repairOrderId);
         if (order != null) {
             DiagnosticReport report = new DiagnosticReport(reportDescription, selectedTasks);
             order.setDiagnosticReport(report);
         }
+
+        */
     } 
 
     /** Marks a repair order as accepted if the order exists.
@@ -104,5 +114,9 @@ public class RepairOrderRegistryHandler {
         if (order != null) {
             order.setAccepted();
         }
+    }
+
+    public void addObservers(List<RepairOrderObserver> observers) {
+        this.observers.addAll(observers);
     }
 }

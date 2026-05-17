@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dto.RepairOrderDTO;
 
 /** Object containing all data and state for the repair order. */
@@ -12,6 +15,24 @@ public class RepairOrder {
     private boolean readyForApproval;
     private boolean accepted;
     private DiagnosticReport diagnosticReport;
+    private List<RepairOrderObserver> observers = new ArrayList<>();
+
+
+   
+
+    public void addObservers(List<RepairOrderObserver> observers) {
+        this.observers.addAll(observers);
+        notifyObservers();
+    }
+
+    private void notifyObservers() {
+
+        RepairOrderDTO dto = toDTO();
+
+        for (RepairOrderObserver observer : observers) {
+            observer.repairOrderUpdate(dto);
+        }
+    }
 
     /** Creates a newly created repair order without a diagnostic report.
      * 
@@ -56,12 +77,14 @@ public class RepairOrder {
         this.diagnosticReport = diagnosticReport;
         this.newlyCreated = false;
         this.readyForApproval = true;
+        notifyObservers();
     }
 
     /** Marks this repair order as accepted.
      */
     public void setAccepted() {
         this.accepted = true;
+        notifyObservers();
     }
 
     /** Creates a DTO representing this repair order. */

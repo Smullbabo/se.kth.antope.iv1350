@@ -10,9 +10,14 @@ import integration.CustomerRegistryHandler;
 import integration.PrinterHandler;
 import integration.RepairOrderRegistryHandler;
 import integration.RepairTaskRegistryHandler;
+import integration.discount.DiscountStrategy;
+import integration.discount.NoDiscountStrategy;
+import integration.discount.WinterDiscountStrategy;
 import model.DiagnosticReport;
 import model.RepairOrder;
+import model.RepairOrderObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** The controller is the view's connection to the rest of the system. The controller contain references to all other systems. */
@@ -21,6 +26,7 @@ public class Controller {
     private final RepairOrderRegistryHandler repairOrderRegistry;
     private final RepairTaskRegistryHandler repairTaskRegistry;
     private final PrinterHandler printer;
+    private List<RepairOrderObserver> observers = new ArrayList<>();
 
     /** Creates a controller connected to all registies and printer.
      * 
@@ -43,6 +49,8 @@ public class Controller {
      * 
      * @param phoneNumber is the customers phoone number.
      * @return CustomerDTO of all the infromation about the customer.
+     * @throws CustomerNotFoundException if no customer with provided phone number exists in map.
+     * @throws DatabaseFailException if the simulated database cannot be reached.
      */
     public CustomerDTO findCustomer(String phoneNumber) throws CustomerNotFoundException{
         return customerRegistry.findCustomer(phoneNumber);
@@ -93,9 +101,12 @@ public class Controller {
      */
     public void addDiagnosticReport(int repairOrderId, String reportDescription, List<RepairTaskDTO> selectedTasks) {
        // repairOrderRegistry.addDiagnosticReport(repairOrderId, reportDescription, selectedTasks);
+
+       DiscountStrategy discountStrategy = new WinterDiscountStrategy();
+
        RepairOrder repairOrder = repairOrderRegistry.findRepairOrderModelFromID(repairOrderId);
         if (repairOrder != null) {
-            DiagnosticReport report = new DiagnosticReport(reportDescription, selectedTasks);
+            DiagnosticReport report = new DiagnosticReport(reportDescription, selectedTasks, discountStrategy);
             repairOrder.setDiagnosticReport(report);
         }
        
@@ -129,5 +140,10 @@ public class Controller {
     public void printRepairOrder(int repairOrderId) {
         RepairOrderDTO order = repairOrderRegistry.findRepairOrderFromID(repairOrderId);
         printer.printRepairOrder(order);
+    }
+
+    public void addRepairOrderObserver(RepairOrderObserver obs) {
+       observers.add(obs);
+       repairOrderRegistry.addObservers(observers);
     }
 }

@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
+import integration.discount.DiscountStrategy;
+import integration.discount.WinterDiscountStrategy;
 import model.DiagnosticReport;
 import model.RepairOrder;
 
@@ -66,7 +68,9 @@ public class RepairOrderRegistryHandlerTest {
 
 
         List<RepairTaskDTO> selectedTasks = new ArrayList<>();
-        DiagnosticReport report = new DiagnosticReport("Diag Desc",selectedTasks);
+        DiscountStrategy discountStrategy = new WinterDiscountStrategy();
+
+        DiagnosticReport report = new DiagnosticReport("Diag Desc",selectedTasks, discountStrategy);
         RepairOrder order = registryHandler.findRepairOrderModelFromID(1);
 
         order.setDiagnosticReport(report);

@@ -4,6 +4,8 @@ import dto.CustomerDTO;
 import dto.DiagnosticReportDTO;
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
+import exceptions.CustomerNotFoundException;
+import exceptions.DatabaseFailException;
 import integration.CustomerRegistryHandler;
 import integration.PrinterHandler;
 import integration.RepairOrderRegistryHandler;
@@ -30,7 +32,7 @@ public class ControllerTest {
         controller = new Controller(
                 new CustomerRegistryHandler(),
                 new RepairOrderRegistryHandler(),
-                new RepairTaskRegistryHandler(),
+                RepairTaskRegistryHandler.getInstance(),
                 new PrinterHandler()
         );
     }
@@ -39,7 +41,7 @@ public class ControllerTest {
      * Tests that an existing customer can be found.
      */
     @Test
-    public void testFindExistingCustomer() {
+    public void testFindExistingCustomer() throws CustomerNotFoundException {
         CustomerDTO customer = controller.findCustomer("0701234567");
 
         assertNotNull(customer);
@@ -50,10 +52,15 @@ public class ControllerTest {
      * Tests that a non-existing customer returns null.
      */
     @Test
-    public void testFindNonExistingCustomerReturnsNull() {
-        CustomerDTO customer = controller.findCustomer("0000000000");
+    public void testFindNonExistingCustomerThrowsException() {
+        
+        assertThrows(CustomerNotFoundException.class, () -> controller.findCustomer("0700000000"), "Searching for nonexisting customer should throw CustomerNotFOundException");
+    }
 
-        assertNull(customer,"Non existing customer returned something other than null: " + customer);
+    @Test
+    public void testFindCustomerDatabaseFail() {
+        
+        assertThrows(DatabaseFailException.class, () -> controller.findCustomer("0000000000"), "Searching for the hardcoded database fail phone number should throw a DatabaseFailException!");
     }
 
     /**

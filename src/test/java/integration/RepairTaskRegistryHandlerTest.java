@@ -15,7 +15,7 @@ public class RepairTaskRegistryHandlerTest {
 
     @BeforeEach
     public void setUp() {
-        repairRegistry = new RepairTaskRegistryHandler();
+        repairRegistry = RepairTaskRegistryHandler.getInstance();
     }
 
 

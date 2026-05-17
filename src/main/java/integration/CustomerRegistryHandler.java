@@ -22,6 +22,8 @@ public class CustomerRegistryHandler {
      * 
      * @param phoneNumber CUstomer phone number
      * @return DTO of a customer from simulated database.
+     * @throws CustomerNotFoundException if no customer with provided phone number exists in map.
+     * @throws DatabaseFailException if the simulated database cannot be reached.
      */
     public CustomerDTO findCustomer(String phoneNumber) throws CustomerNotFoundException{
 

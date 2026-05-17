@@ -2,6 +2,7 @@ package startup;
 
 import controller.Controller;
 import integration.CustomerRegistryHandler;
+import integration.FileLogger;
 import integration.PrinterHandler;
 import integration.RepairOrderRegistryHandler;
 import integration.RepairTaskRegistryHandler;
@@ -22,13 +23,15 @@ public class Main {
 
         RepairOrderRegistryHandler repairOrderRegistry = new RepairOrderRegistryHandler();
 
-        RepairTaskRegistryHandler repairTaskRegistry = new RepairTaskRegistryHandler();
+        RepairTaskRegistryHandler repairTaskRegistry = RepairTaskRegistryHandler.getInstance();
 
         PrinterHandler printer = new PrinterHandler();
 
         Controller controller = new Controller(customerRegistry, repairOrderRegistry, repairTaskRegistry, printer);
 
         View view = new View(controller);
+
+        view.setLogger(new FileLogger());
         
         view.runDemoExecution();
     }

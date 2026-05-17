@@ -26,7 +26,11 @@ public class PrinterHandler {
             System.out.println(" - " + task.getName() + ": " + task.getPrice() + " SEK");
         }
             
-        System.out.println("Total cost: " + report.getTotalCost() + " SEK");
+        System.out.println("Total cost before discount: " + report.getTotalCost() + " SEK");
+
+        System.out.println("Discounts: " + report.getDiscount() + " SEK");
+
+        System.out.println("Final price after discounts: " + report.getFinalCost() + " SEK");
         
         System.out.println("==========================================");
         System.out.println("");

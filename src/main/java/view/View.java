@@ -6,6 +6,10 @@ import dto.DiagnosticReportDTO;
 import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
 import exceptions.CustomerNotFoundException;
+import exceptions.DatabaseFailException;
+import integration.FileLogger;
+import integration.Logger;
+import integration.RepairOrderLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 */
 public class View {
     private final Controller controller;
+    private Logger logger;
 
     /** Creates a view with a reference to a specific controller.
      * 
@@ -22,12 +27,20 @@ public class View {
      */
     public View(Controller controller) {
         this.controller = controller;
+        controller.addRepairOrderObserver(new RepairOrderView());
+        controller.addRepairOrderObserver(new RepairOrderLogger(new FileLogger()));
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 
     /** Runs a basic demo of all of the calls featured in the basic flow of the electric bike repair shop scenario.
      * 
      */
     public void runDemoExecution() {
+
+
         // Simulate customer giving their phone number.
         String phoneNumber = "0701234567";
 
@@ -36,8 +49,13 @@ public class View {
         try {
             customer = controller.findCustomer(phoneNumber);
         } catch (CustomerNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("No customer found for phone number: " + phoneNumber);
+            logger.log("No customer found for phone number: " + phoneNumber);
+            return;
+        } catch (DatabaseFailException e) {
+            System.out.println("Customer Database could not be reached. Try again later");
+            logger.log("Database faliure: " + e.getMessage());
+            return;
         }
         System.out.println("Found customer:" + customer);
 
