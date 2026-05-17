@@ -56,7 +56,7 @@ public class View {
             System.out.println("No customer found for phone number: " + phoneNumber);
             return;
         } catch (DatabaseFailException e) {
-            System.out.println("Customer Database could not be reached. Try again later");
+            System.out.println("Something went wrong. Try again later!");
             logger.log("Database faliure: " + e.getMessage());
             return;
         }
