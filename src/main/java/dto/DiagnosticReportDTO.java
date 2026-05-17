@@ -41,6 +41,18 @@ public class DiagnosticReportDTO {
      /** Gets the total cost of all tasks */
     public double getDiscount() { return discount; }
 
+    
+    @Override
+    /**
+     * Creates a string representation of a diagnostic report.
+     */
+    public String toString() {
+        return
+            "\n Description: " + description +
+            "\n Tasks: " + tasks +
+            "\n Total Cost: " + totalCost;
+    }
+
 
 
 }

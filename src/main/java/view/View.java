@@ -7,8 +7,8 @@ import dto.RepairOrderDTO;
 import dto.RepairTaskDTO;
 import exceptions.CustomerNotFoundException;
 import exceptions.DatabaseFailException;
-import integration.FileLogger;
 import integration.Logger;
+import integration.LoggerToFile;
 import integration.RepairOrderLogger;
 
 import java.util.ArrayList;
@@ -28,9 +28,13 @@ public class View {
     public View(Controller controller) {
         this.controller = controller;
         controller.addRepairOrderObserver(new RepairOrderView());
-        controller.addRepairOrderObserver(new RepairOrderLogger(new FileLogger()));
+        controller.addRepairOrderObserver(new RepairOrderLogger(new LoggerToFile()));
     }
 
+    /**
+     * Sets a the views logger to specified logger.
+     * @param logger logs things to "System_log.txt"
+     */
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
@@ -50,7 +54,6 @@ public class View {
             customer = controller.findCustomer(phoneNumber);
         } catch (CustomerNotFoundException e) {
             System.out.println("No customer found for phone number: " + phoneNumber);
-            logger.log("No customer found for phone number: " + phoneNumber);
             return;
         } catch (DatabaseFailException e) {
             System.out.println("Customer Database could not be reached. Try again later");
@@ -65,7 +68,7 @@ public class View {
 
         // Third sytem call, technican retrieves the repair order for the bike using the serialnumber on the bike.
         RepairOrderDTO order = controller.findRepairOrder(customer.getBikeSerialNumber());
-        System.out.println("Technician found order: " + order);
+        System.out.println("Technician found order!");
 
         // Fourth system call, technician retrieves the possible repairtasks from the repair task registry.
         List<RepairTaskDTO> allTasks = controller.getAllRepairTasks();

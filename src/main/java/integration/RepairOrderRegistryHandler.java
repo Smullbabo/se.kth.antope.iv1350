@@ -116,7 +116,12 @@ public class RepairOrderRegistryHandler {
         }
     }
 
-    public void addObservers(List<RepairOrderObserver> observers) {
-        this.observers.addAll(observers);
+    /**
+     * Adds an observer to the List of observers.
+     * 
+     * @param observer is an observer that observes changes in a repair order.
+     */
+    public void addObserver(RepairOrderObserver observer) {
+        observers.add(observer);
     }
 }

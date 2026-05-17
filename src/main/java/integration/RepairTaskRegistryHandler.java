@@ -4,7 +4,7 @@ import dto.RepairTaskDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Simulates the class retrieving predefined repair tasks. */
+/** A Singleton that simulates the class retrieving predefined repair tasks. */
 public class RepairTaskRegistryHandler {
     private static final RepairTaskRegistryHandler INSTANCE = new RepairTaskRegistryHandler();
 
@@ -19,6 +19,10 @@ public class RepairTaskRegistryHandler {
         repairTasks.add(new RepairTaskDTO(4, "Tire replacement", "Replace damaged tire", 399));
     }
 
+    /**
+     * 
+     * @return the only instance of this object in the program.
+     */
     public static RepairTaskRegistryHandler getInstance() {
         return INSTANCE;
     }

@@ -20,6 +20,11 @@ public class RepairOrder {
 
    
 
+    /**
+     * Adds observer to the list of observers of this object. Also notifies all observers of a change in the repair order (Used when creating the order
+     * in order for repair order view to see it when created)
+     * @param observers is the observer intreseted in this objects state.
+     */
     public void addObservers(List<RepairOrderObserver> observers) {
         this.observers.addAll(observers);
         notifyObservers();
@@ -69,7 +74,7 @@ public class RepairOrder {
      */
     public int getBikeSerialNumber() { return bikeSerialNumber; }
 
-    /** Adds a diagnostic report and changes the state to ready for approval.
+    /** Adds a diagnostic report and changes the state to ready for approval and updates observers.
      * 
      * @param diagnosticReport diagnostic report to be added to the order.
      */
@@ -80,7 +85,7 @@ public class RepairOrder {
         notifyObservers();
     }
 
-    /** Marks this repair order as accepted.
+    /** Marks this repair order as accepted and updates observers.
      */
     public void setAccepted() {
         this.accepted = true;

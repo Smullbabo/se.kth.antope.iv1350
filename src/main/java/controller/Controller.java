@@ -17,7 +17,7 @@ import model.DiagnosticReport;
 import model.RepairOrder;
 import model.RepairOrderObserver;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /** The controller is the view's connection to the rest of the system. The controller contain references to all other systems. */
@@ -26,7 +26,6 @@ public class Controller {
     private final RepairOrderRegistryHandler repairOrderRegistry;
     private final RepairTaskRegistryHandler repairTaskRegistry;
     private final PrinterHandler printer;
-    private List<RepairOrderObserver> observers = new ArrayList<>();
 
     /** Creates a controller connected to all registies and printer.
      * 
@@ -142,8 +141,12 @@ public class Controller {
         printer.printRepairOrder(order);
     }
 
-    public void addRepairOrderObserver(RepairOrderObserver obs) {
-       observers.add(obs);
-       repairOrderRegistry.addObservers(observers);
+    /**
+     * Adds an observer to the registry handler.
+     * 
+     * @param observer is an observer that is to observe repair order changes.
+     */
+    public void addRepairOrderObserver(RepairOrderObserver observer) {
+       repairOrderRegistry.addObserver(observer);
     }
 }

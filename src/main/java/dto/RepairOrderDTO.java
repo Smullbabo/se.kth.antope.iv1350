@@ -59,4 +59,23 @@ public class RepairOrderDTO {
     /** Gets the diagnostic report from this repair order */
     public DiagnosticReportDTO getDiagnosticReport() { return diagnosticReport; }
 
+    @Override
+    /**
+     * Creates a string representation of a repair order DTO object.
+     */
+    public String toString() {
+        return
+        "\n Repair Order" + 
+        "\n -------------------------------" +
+        "\n Id: " + id +
+        "\n Problem Description: " + problemDescription +
+        "\n Customer phone number: " + customerPhoneNumber +
+        "\n Bike Serial No: " + bikeSerialNumber +
+        "\n Newly Created?: " + newlyCreated +
+        "\n Ready For Approval?: " + readyForApproval +
+        "\n Accepted?: " + accepted +
+        "\n Diagnostic Report: " + diagnosticReport +
+        "\n -------------------------------";
+    }
+
 }

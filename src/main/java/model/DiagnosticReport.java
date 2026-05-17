@@ -34,10 +34,18 @@ public class DiagnosticReport {
         return sum;
     }
 
+    /**
+     * Gets the discount amount for the given diagnostic report. Based on the used Discount Strategy.
+     * @return a double representing the value of the discount.
+     */
     public double getDiscount() {
         return discountStrategy.calculateDiscountValue(totalCost);
     }
 
+    /**
+     * Gets the final price that the customer will pay after deducting the discount amount from the total cost.
+     * @return a double representing the final price the customer will pay.
+     */
     public double getFinalCost() {
         return totalCost - getDiscount();
     }

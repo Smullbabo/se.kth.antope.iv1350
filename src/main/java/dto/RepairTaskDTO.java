@@ -27,4 +27,16 @@ public class RepairTaskDTO {
     /** Gets the task price. */
     public double getPrice() { return price; }
 
+
+    @Override
+    /**
+     * Creates a string representation of a repair task.
+     */
+    public String toString() {
+        return
+            "\n Task Id: " + taskId +
+            "\n Task Name: " + name + 
+            "\n Price: " + price;
+    }
+
 }

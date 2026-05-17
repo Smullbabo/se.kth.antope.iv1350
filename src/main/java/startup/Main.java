@@ -2,7 +2,7 @@ package startup;
 
 import controller.Controller;
 import integration.CustomerRegistryHandler;
-import integration.FileLogger;
+import integration.LoggerToFile;
 import integration.PrinterHandler;
 import integration.RepairOrderRegistryHandler;
 import integration.RepairTaskRegistryHandler;
@@ -31,7 +31,7 @@ public class Main {
 
         View view = new View(controller);
 
-        view.setLogger(new FileLogger());
+        view.setLogger(new LoggerToFile());
         
         view.runDemoExecution();
     }
