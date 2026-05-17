@@ -3,7 +3,7 @@ package exceptions;
 /** Exception thrown when the database cannot be reached. */
 public class DatabaseFailException extends RuntimeException{
 
-    /** Creates a new exception for a failed database connection or similar.
+    /** Creates a new exception for a failed database connection or faliure.
      * 
      * @param message describing the database failiure.
      */
